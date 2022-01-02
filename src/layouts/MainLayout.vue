@@ -1,7 +1,8 @@
 <template>
-<Toolbar />
-  <div class='wut'>{{message}}</div>
-  <button @click="changeMessage('hey!')">Change it!</button>
+  <div class='main-box bg-primary'>
+    <Toolbar />
+    <h1 class='text-dark'>Eileen Kane</h1>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,17 +14,22 @@ export default defineComponent({
  },
  data() {
    return {
-      message: 'wazzup?'
-   };
+
+   }
   },
   methods: {
-    changeMessage(message: string) {
-      this.message = message
-    }
+    
   }
 });
 </script>
 
 <style>
-
+  .main-box {
+    min-height: 100vh;
+  }
+  h1 {
+    font-family: 'Waterfall';
+    font-size: 10rem;
+    margin-left: 10rem;
+  }
 </style>
