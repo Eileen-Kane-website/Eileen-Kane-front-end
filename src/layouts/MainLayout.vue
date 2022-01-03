@@ -2,7 +2,7 @@
   <div class='main-box bg-primary q-pb-xl'>
     <Toolbar />
     <HomePage />
-    <button label='Test' secondary text-color='dark' @click='test'/>
+    <ContactModal />
   </div>
 </template>
 
@@ -10,10 +10,12 @@
 import { defineComponent } from 'vue';
 import Toolbar from 'components/Toolbar.vue';
 import HomePage from 'pages/HomePage.vue';
+import ContactModal from 'components/ContactModal.vue';
 export default defineComponent({
  components: {
    Toolbar,
-   HomePage
+   HomePage,
+   ContactModal
  },
  data() {
    return {
@@ -21,15 +23,12 @@ export default defineComponent({
    }
  },
  computed: {
-   showContact(): boolean {
-     return this.$store.state.contact.showContact
-   }
+  //  showContact(): boolean {
+  //    return this.$store.state.contact.showContact
+  //  }
  },
  methods: {
-    test() {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      console.log(`this is working? ${this.showContact}`)
-    }
+    
  },
 });
 </script>
