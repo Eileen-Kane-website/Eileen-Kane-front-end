@@ -53,7 +53,7 @@ export default defineComponent({
 <style lang='scss'>
   .home-card {
     width: 40%;
-    margin: -3rem 0 0 30%;
+    margin: -1rem 0 0 30%;
   }
   .main-name {
     font-family: 'Waterfall';
