@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar class='q-pa-sm bg-info'>
+  <q-toolbar class='tool-bar q-pa-sm bg-info fixed-top'>
     <q-btn
       flat round 
       dense  
@@ -17,7 +17,7 @@
         flat
         text-color='dark'
         :label='button.label' 
-        @click='handleClick(button.value)'
+        @click='button.handler'
       />
     </div>
     <q-dialog v-model='showModal'>
@@ -37,36 +37,48 @@
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue';
+import { mapActions } from 'vuex';
 
 export default defineComponent({
-  setup () {
+  data () {
     return {
       buttons: [
         {
           label: 'Home',
-          value: 'home'
+          value: 'home',
+          handler: () => {console.log('buttons1')}
         },
         { 
-          label: 'Collections', 
-          value: 'collections'
+          label: 'Portfolio', 
+          value: 'portfolio',
+          handler: () => {console.log('buttons2')}
         },
         {
-          label: 'Contact',
-          value: 'contact'
+          label: 'Contact/Sales',
+          value: 'contact',
+          handler: () => {
+            console.log('buttons3')
+            this.handleContactClick()
+            }
         },
         {
           label: 'Artist Bio',
-          value: 'bio'
+          value: 'bio',
+          handler: () => {console.log('buttons')}
+        },
+        {
+          label: 'Resume',
+          value: 'resume',
+          handler: () => {console.log('buttons')}
         }
       ],
-    }
-  },
-  data () {
-    return {
       showModal: false
     }
   },
   methods: {
+    ...mapActions('contact', [
+    'toggleShowContact'
+  ]),
     toggleModal(): void {
       this.showModal = !this.showModal
     },
@@ -74,14 +86,19 @@ export default defineComponent({
       console.log(button)
       this.toggleModal()
     },
-    handleClick(button: string): void {
-      console.log(button)
+    handleClick(): void {
+      console.log('button')
+    },
+    handleContactClick(): void {
+      console.log('handler')
+      void this.toggleShowContact()
     }
-  },
-
+  }
 })
 </script>
 
-<style>
-
+<style lang='scss'>
+  .tool-bar {
+    z-index: 1;
+  }
 </style>
