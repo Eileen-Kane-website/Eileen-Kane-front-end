@@ -57,7 +57,6 @@ export default defineComponent({
           label: 'Contact/Sales',
           value: 'contact',
           handler: () => {
-            console.log('buttons3')
             this.handleContactClick()
             }
         },
@@ -90,7 +89,6 @@ export default defineComponent({
       console.log('button')
     },
     handleContactClick(): void {
-      console.log('handler')
       void this.toggleShowContact()
     }
   }
