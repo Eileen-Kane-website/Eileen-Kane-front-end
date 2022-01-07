@@ -46,12 +46,16 @@ export default defineComponent({
         {
           label: 'Home',
           value: 'home',
-          handler: () => {console.log('buttons1')}
+          handler: () => {
+            this.handleNavClick('/')
+          }
         },
         { 
           label: 'Portfolio', 
           value: 'portfolio',
-          handler: () => {console.log('buttons2')}
+          handler: () => {
+            this.handleNavClick('/portfolio')
+          }
         },
         {
           label: 'Contact/Sales',
@@ -90,6 +94,9 @@ export default defineComponent({
     },
     handleContactClick(): void {
       void this.toggleShowContact()
+    },
+    handleNavClick(route: string): void {
+      void this.$router.push(route)
     }
   }
 })

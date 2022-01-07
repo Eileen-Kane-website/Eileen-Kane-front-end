@@ -42,7 +42,7 @@ export default<Image[]> [
   },
   {
     id: 5,
-    title: 'Greeen Reaching',
+    title: 'Green Reaching',
     medium: 'Watercolor ink/Watercolor paper',
     dimensions: '26" x 19"',
     year: '',

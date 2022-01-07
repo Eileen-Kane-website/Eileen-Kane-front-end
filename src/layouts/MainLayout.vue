@@ -1,20 +1,26 @@
 <template>
+<q-layout>
   <div class='main-box bg-primary q-pb-xl'>
-    <Toolbar />
-    <HomePage />
+    <q-header elevated>
+      <Toolbar />
+    </q-header>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
     <ContactModal />
   </div>
+</q-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Toolbar from 'components/Toolbar.vue';
-import HomePage from 'pages/HomePage.vue';
+// import HomePage from 'pages/HomePage.vue';
 import ContactModal from 'components/ContactModal.vue';
 export default defineComponent({
  components: {
    Toolbar,
-   HomePage,
+   
    ContactModal
  },
  data() {
