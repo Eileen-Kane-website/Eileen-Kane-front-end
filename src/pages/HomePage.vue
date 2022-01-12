@@ -23,7 +23,7 @@
           infinite
           control-color="primary"
           class="rounded-borders"
-          style="max-width: 100%"
+          
         >
           <q-carousel-slide
             v-for='image in images' 
@@ -101,11 +101,12 @@ export default defineComponent({
 
 <style lang='scss'>
   .home-card {
-    width: 40%;
+    max-width: 40%;
     margin: -1rem 0 0 30%;
   }
   .text-box {
-    position : relative;
+    width: 60%;
+    position: relative;
   }
   .main-name {
     font-family: 'Waterfall';
@@ -118,7 +119,7 @@ export default defineComponent({
     right: 55px
   }
   .main-image {
-    width: 100%;
+    
     margin: 0 0 0 0;
   }
   .image-title {
