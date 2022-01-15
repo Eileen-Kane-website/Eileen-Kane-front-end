@@ -1,34 +1,36 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 <template>
   <q-page class='bg-primary q-pa-lg flex row justify-around items-center'>
-    <div class='q-ma-xl image-box'>
+    <div class='q-mt-xl image-box'>
       <q-img
         v-for='image in images'
         class='portfolio-image'
         :key='image.id'
         :src='image.path'
-        @click='handleModalOpen(image.path)'
+        @click='handleModalOpen(image.path); toggleShowHeader()'
       />
     </div>
-    <div class='q-ma-xl'>
+    <div class='q-mt-xl'>
       <q-card class='bg-info portfolio-carousel'>
-      <q-card-section>
+      <q-card-section class='flex items-center carousel-top' >
         <q-carousel
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
           animated
           infinite
-          control-color="primary"
-          class="rounded-borders"
-          style="cursor: pointer;"
+          class="rounded-borders slide"
         >
           <q-carousel-slide
             v-for='image in images' 
             :key='image.id' 
             :name="image.title" 
-            :img-src="image.path"
-            @click='handleModalOpen(image.path)' 
-          />
+            class='bg-primary flex justify-center items-center'
+            style='object-fit: contain'
+            @click='handleModalOpen(image.path); toggleShowHeader()' 
+          >
+            <img :src='image.path' class='slide-image'/>
+          </q-carousel-slide>
         </q-carousel>
       </q-card-section>
 
@@ -47,7 +49,7 @@
           infinite
           control-color="dark"
           class="rounded-borders"
-          style='max-height: 10rem'
+          style='max-height: 10rem;'
         >
           <q-carousel-slide
             v-for='image in images'
@@ -83,7 +85,7 @@
         round
         text-color='dark' 
         label='X' 
-        @click='handleModalClose()' 
+        @click='handleModalClose(); toggleShowHeader()' 
         class='X'
     />
   </div>
@@ -91,17 +93,23 @@
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue';
+import { mapActions } from 'vuex';
 import images from '../data/data';
 export default defineComponent({
+  methods: {
+    ...mapActions('header', [
+    'toggleShowHeader'
+  ])
+  },
   setup() {
     const selectedImg = ref<string>('')
     const showImageModal = ref<boolean>(false)
+  
     const handleModalOpen = (image: string) => {
       selectedImg.value = image
       showImageModal.value = true
     }
     const handleModalClose = () => {
-      console.log('hello!')
       showImageModal.value = false
     }
     return {
@@ -129,7 +137,17 @@ export default defineComponent({
     cursor: pointer;
   }
   .portfolio-carousel {
-    width: 40vw;
+    width: 50vw;
+    min-height: 70vh;
+  }
+  .slide {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .slide-image {
+    max-height: 95%;
+    max-width: 95%;
   }
   .image-modal {
     width: 100vw;
@@ -148,8 +166,8 @@ export default defineComponent({
   }
   .X {
     position: absolute;
-    top: 10%;
-    left: 10%;
+    top: 10px;
+    left: 10px;
     font-size: 2em;
   }
 </style>

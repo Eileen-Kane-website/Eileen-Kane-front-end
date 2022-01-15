@@ -1,7 +1,7 @@
 <template>
 <q-layout>
   <div class='main-box bg-primary q-pb-xl'>
-    <q-header elevated>
+    <q-header v-if='showHeader' elevated >
       <Toolbar />
     </q-header>
     <q-page-container>
@@ -15,12 +15,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Toolbar from 'components/Toolbar.vue';
-// import HomePage from 'pages/HomePage.vue';
 import ContactModal from 'components/ContactModal.vue';
 export default defineComponent({
  components: {
    Toolbar,
-   
    ContactModal
  },
  data() {
@@ -29,9 +27,9 @@ export default defineComponent({
    }
  },
  computed: {
-  //  showContact(): boolean {
-  //    return this.$store.state.contact.showContact
-  //  }
+  showHeader(): boolean {
+    return this.$store.state.header.showHeader
+  }
  },
  methods: {
     

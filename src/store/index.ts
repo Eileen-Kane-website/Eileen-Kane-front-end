@@ -7,6 +7,8 @@ import {
 } from 'vuex'
 import contact from './module-contact';
 import { ContactState } from './module-contact/state';
+import header from './module-header';
+import { HeaderState } from './module-header/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -24,7 +26,8 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown
-  contact: ContactState
+  contact: ContactState,
+  header: HeaderState
 }
 
 // provide typings for `this.$store`
@@ -40,7 +43,8 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      contact
+      contact,
+      header
     },
     
 
