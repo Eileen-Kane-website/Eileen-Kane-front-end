@@ -9,6 +9,8 @@ import contact from './module-contact';
 import { ContactState } from './module-contact/state';
 import header from './module-header';
 import { HeaderState } from './module-header/state';
+import portfolio from './module-portfolio';
+import { PortfolioState } from './module-portfolio/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -27,7 +29,8 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown
   contact: ContactState,
-  header: HeaderState
+  header: HeaderState,
+  portfolio: PortfolioState
 }
 
 // provide typings for `this.$store`
@@ -44,7 +47,8 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       contact,
-      header
+      header,
+      portfolio
     },
     
 

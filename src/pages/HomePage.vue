@@ -73,7 +73,7 @@
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue';
-import images from '../data/data';
+import { images } from '../data/data';
 
 export default defineComponent({
   setup () {

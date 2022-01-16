@@ -10,7 +10,7 @@
         @click='handleModalOpen(image.path); toggleShowHeader()'
       />
     </div>
-    <div class='q-mt-xl'>
+    <div class='q-mt-xl bg-info'>
       <q-card class='bg-info portfolio-carousel'>
       <q-card-section class='flex items-center carousel-top' >
         <q-carousel
@@ -92,9 +92,10 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { mapActions } from 'vuex';
-import images from '../data/data';
+import { useStore } from 'src/store';
+
 export default defineComponent({
   methods: {
     ...mapActions('header', [
@@ -102,9 +103,10 @@ export default defineComponent({
   ])
   },
   setup() {
+    const store = useStore();
     const selectedImg = ref<string>('')
     const showImageModal = ref<boolean>(false)
-  
+    const images = computed(() => store.state.portfolio.images);
     const handleModalOpen = (image: string) => {
       selectedImg.value = image
       showImageModal.value = true
@@ -114,7 +116,7 @@ export default defineComponent({
     }
     return {
       showImageModal,
-      slide: ref<string>(images[0].title),
+      slide: ref<string>(images.value[0].title),
       images,
       selectedImg,
       handleModalOpen,
