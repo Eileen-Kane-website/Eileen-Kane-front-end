@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 <template>
-  <q-page class='bg-primary q-pa-lg flex row justify-around items-center'>
-    <div class='q-mt-xl image-box'>
+  <q-page class='bg-primary q-pa-lg q-pt-xl flex row justify-around items-center'>
+    <div v-if='newImages' class='q-mt-xl image-box'>
       <q-img
-        v-for='image in images'
+        v-for='image in newImages'
         class='portfolio-image'
         :key='image.id'
         :src='image.path'
-        @click='handleModalOpen(image.path); toggleShowHeader()'
+        @click='handleModalOpen(image.path)'
       />
     </div>
     <div class='q-mt-xl bg-info'>
       <q-card class='bg-info portfolio-carousel'>
       <q-card-section class='flex items-center carousel-top' >
+        <div class='text-h4 text-center' v-if='loading'>LOADING</div>
         <q-carousel
+          v-if='!loading'
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
@@ -22,12 +23,12 @@
           class="rounded-borders slide"
         >
           <q-carousel-slide
-            v-for='image in images' 
+            v-for='image in newImages' 
             :key='image.id' 
             :name="image.title" 
             class='bg-primary flex justify-center items-center'
             style='object-fit: contain'
-            @click='handleModalOpen(image.path); toggleShowHeader()' 
+            @click='handleModalOpen(image.path); logData(this.newImages)' 
           >
             <img :src='image.path' class='slide-image'/>
           </q-carousel-slide>
@@ -38,6 +39,7 @@
 
       <q-card-section >
         <q-carousel
+          v-if='newImages'
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
@@ -52,7 +54,7 @@
           style='max-height: 10rem;'
         >
           <q-carousel-slide
-            v-for='image in images'
+            v-for='image in newImages'
             :key='image.id + 1'
             :name='image.title'
             class='bg-info q-pb-xl'
@@ -85,42 +87,82 @@
         round
         text-color='dark' 
         label='X' 
-        @click='handleModalClose(); toggleShowHeader()' 
+        @click='handleModalClose(); toggleShowHeader' 
         class='X'
     />
   </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed } from 'vue';
-import { mapActions } from 'vuex';
+
+import { 
+  defineComponent, 
+  ref, 
+  computed, 
+  ComputedRef, 
+  watch,
+  onMounted 
+} from 'vue';
 import { useStore } from 'src/store';
+import { Series, ImageItem } from 'src/types/types';
 
 export default defineComponent({
   methods: {
-    ...mapActions('header', [
-    'toggleShowHeader'
-  ])
+    logData(data: unknown) {
+      console.log(data)
+    }
   },
   setup() {
     const store = useStore();
+    const loading = ref<boolean>(false)
     const selectedImg = ref<string>('')
     const showImageModal = ref<boolean>(false)
-    const images = computed(() => store.state.portfolio.images);
-    const handleModalOpen = (image: string) => {
+    const images: ComputedRef<ImageItem[]> = computed(
+      () => store.state.portfolio.images);
+    const selectedSeries: ComputedRef<Series> = computed(
+      () => store.state.portfolio.selectedSeries);
+    const newImages = ref<ImageItem[] | []>(images.value)
+    const slide = ref(newImages.value[0].title)
+    const toggleShowHeader = (boolean: boolean) => {
+      void store.dispatch('header/toggleShowHeader', boolean)
+    }
+    const setShowSeriesSelect = (boolean: boolean) => {
+      void store.dispatch('header/setShowSeriesSelect', boolean)
+    }
+    onMounted(() => {
+      setShowSeriesSelect(true)
+    })
+    watch(selectedSeries, () => {
+      loading.value = true
+      const res = images.value.filter(image => (
+        image.seriesId === selectedSeries.value.id
+      ))
+      newImages.value = res
+      setTimeout(() => {
+        loading.value = false
+      }, 500)
+      slide.value = newImages.value[0].title
+    })
+    const handleModalOpen = (image: string): void => {
       selectedImg.value = image
       showImageModal.value = true
+      void toggleShowHeader(false)
     }
-    const handleModalClose = () => {
+    const handleModalClose = (): void => {
       showImageModal.value = false
+      void toggleShowHeader(true)
     }
     return {
+      toggleShowHeader,
       showImageModal,
-      slide: ref<string>(images.value[0].title),
       images,
+      selectedSeries,
       selectedImg,
       handleModalOpen,
-      handleModalClose
+      handleModalClose,
+      newImages,
+      slide,
+      loading
     }
   }
 })
@@ -133,6 +175,8 @@ export default defineComponent({
   }
   .image-box {
     width: 30vw;
+    max-height: 80vh;
+    overflow: scroll;
   }
   .portfolio-image {
     max-width: 50%;

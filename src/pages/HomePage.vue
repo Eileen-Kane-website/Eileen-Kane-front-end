@@ -72,30 +72,23 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { images } from '../data/data';
+import { useStore } from 'src/store';
 
 export default defineComponent({
   setup () {
+    const store= useStore()
+
+    onMounted(() => {
+      void store.dispatch('header/setShowSeriesSelect', false)
+    })
+
     return {
       slide: ref(images[0].title),
       images,
     }
-  },
-  data() {
-    return {
-      
-    }
-  },
-  computed: {
-    
-  },
-  methods: {
-    // printImages() {
-    //   console.log(this.images)
-    // }
   }
-
 })
 </script>
 

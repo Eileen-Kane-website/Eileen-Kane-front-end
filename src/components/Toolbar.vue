@@ -11,6 +11,18 @@
         size='3em'
       />
     </q-btn>
+    <q-select
+      v-if='showSeriesSelect'
+      outlined
+      label="Select Series To View"
+      :options='seriesOptions'
+      v-model='selectedSeries'
+      @update:model-value="setSeries()"
+      transition-show='flip-down'
+      transition-hide='flip-up'
+      class='q-ml-xl'
+      style='width: 200px'
+    />
     <q-space />
     <div v-for='button in buttons' :key='button.label'>
       <q-btn
@@ -36,10 +48,45 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue';
-import { mapActions } from 'vuex';
 
+import { 
+  defineComponent, 
+  computed, 
+  ref,
+} from 'vue';
+import { mapActions } from 'vuex';
+import { useStore } from 'src/store';
+import { Series } from 'src/types/types';
+
+interface SeriesOption {
+  label: string,
+  value: number
+}
+ 
 export default defineComponent({
+  setup() {
+    const store = useStore();
+    const series = computed(() => store.state.portfolio.series);
+    const showSeriesSelect = computed(() => store.state.header.showSeriesSelect);
+    const currentSeries = computed(() => store.state.portfolio.selectedSeries)
+    const selectedSeries = ref({ 
+      label: currentSeries.value.name, 
+      value: currentSeries.value.id
+    });
+    const seriesOptions: SeriesOption[] = series.value.map(
+      seriesObj => ({
+        label: seriesObj.name,
+        value: seriesObj.id
+      })
+    )
+    
+    return {
+      series,
+      seriesOptions,
+      showSeriesSelect,
+      selectedSeries
+    }
+  },
   data () {
     return {
       buttons: [
@@ -81,7 +128,18 @@ export default defineComponent({
   methods: {
     ...mapActions('contact', [
     'toggleShowContact'
-  ]),
+    ]),
+    ...mapActions('portfolio', [
+      'setSelectedSeries'
+    ]),
+    setSeries(): void {
+      const series: Series = { 
+        name: this.selectedSeries.label, 
+        id: this.selectedSeries.value 
+      }
+      void this.setSelectedSeries(series)
+      void this.$router.push('/portfolio')
+    },
     toggleModal(): void {
       this.showModal = !this.showModal
     },
