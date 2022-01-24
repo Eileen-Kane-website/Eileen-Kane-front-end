@@ -1,6 +1,6 @@
 <template>
   <q-page-container class='bg-accent q-pt-lg'>
-    <div class='bio-outer'>
+    <div class='bio-outer' style="background-image: url('Protest-I.jpeg">
       <div class='overlay q-pb-xl'>
         <div class='headline-box border bg-primary'>
           <h1 class='bio-headline text-accent text-center'>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useStore } from 'src/store';
 
 export default defineComponent ({
@@ -42,7 +42,7 @@ setup() {
 <style lang='scss'>
   .bio-outer {
     width: 100vw;
-    background-image: url('~assets/Protest-i.jpeg');
+    // background-image: url('../assets/Protest-i.jpeg');
     background-repeat: no-repeat;
     background-size: 120%;
   }
