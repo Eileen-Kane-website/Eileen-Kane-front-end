@@ -42,7 +42,7 @@ setup() {
 <style lang='scss'>
   .bio-outer {
     width: 100vw;
-    background-image: url('assets/Protest-i.jpeg');
+    background-image: url('src/assets/Protest-i.jpeg');
     background-repeat: no-repeat;
     background-size: 120%;
   }
