@@ -82,7 +82,6 @@ export default defineComponent({
     )
 
     watch(currentSeries, () => {
-      console.log('hit it!')
       selectedSeries.value = { 
       label: currentSeries.value.name, 
       value: currentSeries.value.id
@@ -123,7 +122,9 @@ export default defineComponent({
         {
           label: 'Artist Bio',
           value: 'bio',
-          handler: () => {console.log('buttons')}
+          handler: () => {
+            this.handleNavClick('/bio')
+          }
         },
         {
           label: 'Resume',
