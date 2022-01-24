@@ -24,3 +24,6 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+### Staging deployment
+https://app.netlify.com/sites/unruffled-brown-94fe02/overview
