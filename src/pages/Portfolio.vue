@@ -12,7 +12,12 @@
     <div class='q-mt-xl bg-info'>
       <q-card class='bg-info portfolio-carousel'>
       <q-card-section class='flex items-center carousel-top' >
-        <div class='text-h4 text-center' v-if='loading'>LOADING</div>
+        <div class='spinner-box flex justify-center items-center' v-if='loading'>
+          <q-spinner-hourglass
+            color='dark'
+            size='8rem'
+          />
+        </div>
         <q-carousel
           v-if='!loading'
           v-model="slide"
@@ -24,7 +29,7 @@
         >
           <q-carousel-slide
             v-for='image in newImages' 
-            :key='image.id' 
+            :key="`carousel-image-${image.id}`"
             :name="image.title" 
             class='bg-primary flex justify-center items-center'
             style='object-fit: contain'
@@ -51,11 +56,11 @@
           infinite
           control-color="dark"
           class="rounded-borders"
-          style='max-height: 10rem;'
+          style='height: 10rem;'
         >
           <q-carousel-slide
             v-for='image in newImages'
-            :key='image.id + 1'
+            :key="`description-${image.id}`"
             :name='image.title'
             class='bg-info q-pb-xl'
           >
@@ -171,7 +176,10 @@ export default defineComponent({
 <style lang='scss'>
   .main-page {
     padding-top: 500px;
-    
+  }
+  .spinner-box {
+    width: 100%;
+    height: 30rem;
   }
   .image-box {
     width: 30vw;
@@ -184,11 +192,11 @@ export default defineComponent({
   }
   .portfolio-carousel {
     width: 50vw;
-    min-height: 70vh;
+    height: 45rem;
   }
   .slide {
     width: 100%;
-    height: 100%;
+    height: 30rem;
     cursor: pointer;
   }
   .slide-image {

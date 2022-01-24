@@ -5,6 +5,7 @@ export interface ImageItem {
   dimensions: string;
   year: string;
   path: string;
+  isFeatured: boolean;
   seriesId: number; 
 }
 

@@ -53,6 +53,7 @@ import {
   defineComponent, 
   computed, 
   ref,
+  watch
 } from 'vue';
 import { mapActions } from 'vuex';
 import { useStore } from 'src/store';
@@ -79,6 +80,14 @@ export default defineComponent({
         value: seriesObj.id
       })
     )
+
+    watch(currentSeries, () => {
+      console.log('hit it!')
+      selectedSeries.value = { 
+      label: currentSeries.value.name, 
+      value: currentSeries.value.id
+      }
+    })
     
     return {
       series,
