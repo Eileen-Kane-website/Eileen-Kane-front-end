@@ -26,7 +26,7 @@
           
         >
           <q-carousel-slide
-            v-for='image in images' 
+            v-for='image in featuredImages' 
             :key='image.id' 
             :name="image.title" 
             :img-src="image.path" 
@@ -49,7 +49,7 @@
           style="max-height: 7rem"
         >
           <q-carousel-slide
-            v-for='image in images'
+            v-for='image in featuredImages'
             :key='image.id + 1'
             :name='image.title'
             class='bg-info'  
@@ -72,30 +72,26 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue';
-import images from '../data/data';
+import { defineComponent, ref, onMounted } from 'vue';
+import { useStore } from 'src/store';
+import { ImageItem } from 'src/types/types';
 
 export default defineComponent({
   setup () {
-    return {
-      slide: ref(images[0].title),
-      images,
-    }
-  },
-  data() {
-    return {
-      
-    }
-  },
-  computed: {
-    
-  },
-  methods: {
-    // printImages() {
-    //   console.log(this.images)
-    // }
-  }
+    const store= useStore()
+    const images: ImageItem[] = store.state.portfolio.images
+    const featuredImages = images.filter(image => image.isFeatured)
 
+    onMounted(() => {
+      void store.dispatch('header/setShowSeriesSelect', false)
+      void store.dispatch('portfolio/resetSelectedSeries')
+    })
+
+    return {
+      slide: ref(featuredImages[0].title),
+      featuredImages,
+    }
+  }
 })
 </script>
 
