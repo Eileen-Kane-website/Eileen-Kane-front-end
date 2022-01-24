@@ -1,29 +1,44 @@
 <template>
-<Toolbar />
-  <div class='wut'>{{message}}</div>
-  <button @click="changeMessage('hey!')">Change it!</button>
+<q-layout>
+  <div class='main-box bg-primary q-pb-xl'>
+    <q-header v-if='showHeader' elevated >
+      <Toolbar />
+    </q-header>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+    <ContactModal />
+  </div>
+</q-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Toolbar from 'components/Toolbar.vue';
+import ContactModal from 'components/ContactModal.vue';
 export default defineComponent({
  components: {
-   Toolbar
+   Toolbar,
+   ContactModal
  },
  data() {
    return {
-      message: 'wazzup?'
-   };
-  },
-  methods: {
-    changeMessage(message: string) {
-      this.message = message
-    }
+
+   }
+ },
+ computed: {
+  showHeader(): boolean {
+    return this.$store.state.header.showHeader
   }
+ },
+ methods: {
+    
+ },
 });
 </script>
 
-<style>
-
+<style lang='scss'>
+  .main-box {
+    min-height: 100vh;
+  }
 </style>

@@ -5,7 +5,12 @@ import {
   Store as VuexStore,
   useStore as vuexUseStore,
 } from 'vuex'
-
+import contact from './module-contact';
+import { ContactState } from './module-contact/state';
+import header from './module-header';
+import { HeaderState } from './module-header/state';
+import portfolio from './module-portfolio';
+import { PortfolioState } from './module-portfolio/state';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -22,7 +27,10 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown
+  // example: unknown
+  contact: ContactState,
+  header: HeaderState,
+  portfolio: PortfolioState
 }
 
 // provide typings for `this.$store`
@@ -38,12 +46,15 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      // example
+      contact,
+      header,
+      portfolio
     },
+    
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: !!process.env.DEBUGGING
+    // strict: !!process.env.DEBUGGING
   })
 
   return Store;
