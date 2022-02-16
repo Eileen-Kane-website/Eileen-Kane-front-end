@@ -2,7 +2,7 @@
   <q-page-container class='bg-accent q-pt-lg'>
     <div class='bio-outer' style="background-image: url('Protest-I.jpeg">
       <div class='overlay q-pb-xl'>
-        <div class='headline-box border bg-primary'>
+        <div class='headline-box border bg-primary flex justify-center'>
           <h1 class='bio-headline text-accent text-center'>
             about the artist
           </h1>
@@ -57,10 +57,10 @@ setup() {
     margin: 2rem 0 3rem 3rem;
   }
   .bio-headline {
-    font-family: 'Waterfall';
-    font-size: 9rem;
+    font-family: 'Poppins';
+    font-size: 3rem;
     text-shadow: $secondary 2px 2px;
-    margin-top: 0px;
+    margin-top: 10px;
   }
   .bio-box {
     width: 60%;

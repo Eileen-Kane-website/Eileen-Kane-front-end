@@ -75,6 +75,7 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import { useStore } from 'src/store';
 import { ImageItem } from 'src/types/types';
+import imageApi from 'src/api/image-api';
 
 export default defineComponent({
   setup () {
@@ -85,6 +86,7 @@ export default defineComponent({
     onMounted(() => {
       void store.dispatch('header/setShowSeriesSelect', false)
       void store.dispatch('portfolio/resetSelectedSeries')
+      imageApi.getImages()
     })
 
     return {
@@ -98,21 +100,23 @@ export default defineComponent({
 <style lang='scss'>
   .home-card {
     max-width: 40%;
-    margin: -1rem 0 0 30%;
+    margin: 24px 0 0 30%;
   }
   .text-box {
     width: 60%;
     position: relative;
   }
   .main-name {
-    font-family: 'Waterfall';
-    font-size: 9rem;
-    text-shadow: $secondary 2px 2px;
+    font-family: 'Poppins';
+    font-size: 4rem;
+    text-shadow: $secondary 2px 1px;
+    margin-left: -80px;
   }
   .biz-name {
     position: absolute;
-    top: 115px;
-    right: 55px
+    font-family: 'Poppins';
+    top: 100px;
+    right: 55px;
   }
   .main-image {
     
