@@ -4,7 +4,7 @@
       class='justify-center text-box' 
       style='max-width: 40%; margin-left: 30%'
     >
-      <h1 class='main-name text-accent text-center q-mt-xl'>
+      <h1 class='main-name text-accent text-center q-mt-xl' @click='log'>
         Eileen S. Kane
       </h1>
       <div class='text-h5 text-accent biz-name'>
@@ -14,7 +14,18 @@
 
     <q-card class='home-card bg-info'>
       <q-card-section>
+        <div
+          v-if='loading'
+          class='flex items-center q-pa-xl justify-center'
+        >
+          <q-spinner-hourglass
+            color='dark'
+            size='8rem'
+            class='q-ma-xl'
+          />
+        </div>
         <q-carousel
+          v-if='!loading'
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
@@ -23,21 +34,21 @@
           infinite
           control-color="primary"
           class="rounded-borders"
-          
         >
           <q-carousel-slide
             v-for='image in featuredImages' 
             :key='image.id' 
             :name="image.title" 
-            :img-src="image.path" 
+            :img-src="image.slug.includes('http') ? image.slug : `${image.slug}.jpeg`" 
           />
         </q-carousel>
       </q-card-section>
 
       <q-separator inset class='q-mt-lg'/> 
 
-      <q-card-section>
+      <q-card-section style='min-height: 7rem;'>
         <q-carousel
+          v-if='featuredImages.length'
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
@@ -72,26 +83,41 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, ComputedRef, watch, computed } from 'vue';
 import { useStore } from 'src/store';
 import { ImageItem } from 'src/types/types';
 import imageApi from 'src/api/image-api';
 
 export default defineComponent({
   setup () {
-    const store= useStore()
-    const images: ImageItem[] = store.state.portfolio.images
-    const featuredImages = images.filter(image => image.isFeatured)
+    const store = useStore()
+    const loading = ref<boolean>(true);
+    const images: ComputedRef<ImageItem[]> = computed(() => store.state.portfolio.images)
+    const featuredImages: ComputedRef<ImageItem[]> = computed(() => images.value.filter(image => image.isFeatured))
+    const slide = ref<string>('')
+    
+    watch(() => images.value, () => {
+      // console.log('slide => ', images.value)
+      slide.value = featuredImages.value[0].title
+      loading.value = false
+    })
+
+    const log = () => {
+      console.log('--SS-HOME------->', store.state.portfolio.selectedSeries)
+    }
 
     onMounted(() => {
       void store.dispatch('header/setShowSeriesSelect', false)
       void store.dispatch('portfolio/resetSelectedSeries')
-      imageApi.getImages()
+      void imageApi.getImages()
+        .then((images: ImageItem[]) => store.dispatch('portfolio/setImages', images))
     })
 
     return {
-      slide: ref(featuredImages[0].title),
+      loading,
+      slide,
       featuredImages,
+      log
     }
   }
 })
@@ -100,7 +126,7 @@ export default defineComponent({
 <style lang='scss'>
   .home-card {
     max-width: 40%;
-    margin: 24px 0 0 30%;
+    margin: 60px 0 0 30%;
   }
   .text-box {
     width: 60%;

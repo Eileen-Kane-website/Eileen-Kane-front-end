@@ -4,9 +4,10 @@ export interface ImageItem {
   medium: string;
   dimensions: string;
   year: string;
-  path: string;
+  slug: string;
   isFeatured: boolean;
-  seriesId: number; 
+  seriesId: number;
+  seriesName: string; 
 }
 
 export interface Series {
