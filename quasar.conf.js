@@ -11,6 +11,9 @@
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
+
+  require('dotenv').config();
+
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
@@ -55,7 +58,9 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      env: require('dotenv').config().parsed,
+      env: {
+        API_URL: process.env.API_URL
+      },
       transpile: true,
       // publicPath: '/',
 
