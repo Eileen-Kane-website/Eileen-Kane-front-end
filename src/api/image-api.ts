@@ -1,6 +1,5 @@
 import { api } from 'boot/axios';
 import { ImageItem } from 'src/types/types';
-import process from 'process';
 
 const getImages = async(): Promise<ImageItem[]>=> {
   try {
