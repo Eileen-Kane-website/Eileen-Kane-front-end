@@ -7,7 +7,7 @@ const getImages = async(): Promise<ImageItem[]>=> {
     const res = await api.get('/art-works');
     return res.data;
   } catch {
-    console.log('ERRRRRRRRROR!', process.env.API_URL)
+    console.log('ERRRRRRRRROR!', process.env)
   } return []
 }
 
