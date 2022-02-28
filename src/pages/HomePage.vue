@@ -4,7 +4,7 @@
       class='justify-center text-box' 
       style='max-width: 40%; margin-left: 30%'
     >
-      <h1 class='main-name text-accent text-center q-mt-xl' @click='log'>
+      <h1 class='main-name text-accent text-center q-mt-lg' @click='log'>
         Eileen S. Kane
       </h1>
       <div class='text-h5 text-accent biz-name'>
@@ -39,12 +39,12 @@
             v-for='image in featuredImages' 
             :key='image.id' 
             :name="image.title" 
-            :img-src="image.slug.includes('http') ? image.slug : `${image.slug}.jpeg`" 
+            :img-src="`${image.slug}.jpeg`" 
           />
         </q-carousel>
       </q-card-section>
 
-      <q-separator inset class='q-mt-lg'/> 
+      <q-separator inset color='dark' size='1px' class='q-mt-lg'/> 
 
       <q-card-section style='min-height: 7rem;'>
         <q-carousel
@@ -97,7 +97,6 @@ export default defineComponent({
     const slide = ref<string>('')
     
     watch(() => images.value, () => {
-      // console.log('slide => ', images.value)
       slide.value = featuredImages.value[0].title
       loading.value = false
     })
@@ -125,6 +124,7 @@ export default defineComponent({
 
 <style lang='scss'>
   .home-card {
+    border: solid $dark 1px;
     max-width: 40%;
     margin: 60px 0 0 30%;
   }

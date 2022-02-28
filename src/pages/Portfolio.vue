@@ -1,11 +1,11 @@
 <template>
   <q-page class='bg-primary q-pa-lg q-pt-xl flex row justify-around items-center'>
-    <div v-if='newImages' class='q-mt-xl image-box'>
+    <div v-if='newImages' class='q-mt-xl q-pa-sm image-box'>
       <q-img
         v-for='image in newImages'
         class='portfolio-image'
         :key='image.id'
-        :src="image.slug.includes('http') ? image.slug : `${image.slug}.jpeg`"
+        :src="`${image.slug}.jpeg`"
         @click="handleModalOpen(`${image.slug}.jpeg`)"
       />
     </div>
@@ -35,12 +35,12 @@
             style='object-fit: contain'
             @click="handleModalOpen(`${image.slug}.jpeg`)"
           >
-            <img :src="image.slug.includes('http') ? image.slug : `${image.slug}.jpeg`"  class='slide-image'/>
+            <img :src="`${image.slug}.jpeg`"  class='slide-image'/>
           </q-carousel-slide>
         </q-carousel>
       </q-card-section>
 
-      <q-separator inset class='q-mt-lg'/> 
+      <q-separator inset color='dark' size='1px' class='q-mt-lg'/> 
 
       <q-card-section >
         <q-carousel
@@ -191,6 +191,8 @@ export default defineComponent({
     height: 30rem;
   }
   .image-box {
+    border: solid $dark 1px;
+    border-radius: 5px;
     width: 30vw;
     max-height: 80vh;
     overflow: scroll;
@@ -200,6 +202,7 @@ export default defineComponent({
     cursor: pointer;
   }
   .portfolio-carousel {
+    border: solid $dark 1px;
     width: 50vw;
     height: 45rem;
   }
@@ -221,8 +224,8 @@ export default defineComponent({
     z-index: 3;
   }
   .selected-image {
-    max-height: 80%;
-    max-width: 80%;
+    max-height: 85%;
+    max-width: 85%;
     min-width: 60%;
     object-fit: contain;
     transition: opacity .28s ease-in;

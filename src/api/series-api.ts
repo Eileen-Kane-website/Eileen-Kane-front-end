@@ -5,8 +5,8 @@ const getSeries = async(): Promise<Series[]> => {
   try {
     const res = await api.get('/series');
     return res.data;
-  } catch {
-    console.log('ERROR')
+  } catch(error) {
+    console.log(error)
   } return []
 }
 
