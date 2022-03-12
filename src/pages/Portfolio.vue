@@ -1,12 +1,12 @@
 <template>
   <q-page class='bg-primary q-pa-lg q-pt-xl flex row justify-around items-center'>
-    <div v-if='newImages' class='q-mt-xl image-box'>
+    <div v-if='newImages' class='q-mt-xl q-pa-sm image-box'>
       <q-img
         v-for='image in newImages'
         class='portfolio-image'
         :key='image.id'
-        :src='image.path'
-        @click='handleModalOpen(image.path)'
+        :src="`${image.slug}.jpeg`"
+        @click="handleModalOpen(`${image.slug}.jpeg`)"
       />
     </div>
     <div class='q-mt-xl bg-info'>
@@ -33,18 +33,18 @@
             :name="image.title" 
             class='bg-primary flex justify-center items-center'
             style='object-fit: contain'
-            @click='handleModalOpen(image.path); logData(this.newImages)' 
+            @click="handleModalOpen(`${image.slug}.jpeg`)"
           >
-            <img :src='image.path' class='slide-image'/>
+            <img :src="`${image.slug}.jpeg`"  class='slide-image'/>
           </q-carousel-slide>
         </q-carousel>
       </q-card-section>
 
-      <q-separator inset class='q-mt-lg'/> 
+      <q-separator inset color='dark' size='1px' class='q-mt-lg'/> 
 
       <q-card-section >
         <q-carousel
-          v-if='newImages'
+          v-if='!loading'
           v-model="slide"
           transition-prev="slide-right"
           transition-next="slide-left"
@@ -112,51 +112,60 @@ import { useStore } from 'src/store';
 import { Series, ImageItem } from 'src/types/types';
 
 export default defineComponent({
-  methods: {
-    logData(data: unknown) {
-      console.log(data)
-    }
-  },
+  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
   setup() {
     const store = useStore();
-    const loading = ref<boolean>(false)
+    const loading = ref<boolean>(true)
     const selectedImg = ref<string>('')
     const showImageModal = ref<boolean>(false)
     const images: ComputedRef<ImageItem[]> = computed(
       () => store.state.portfolio.images);
     const selectedSeries: ComputedRef<Series> = computed(
       () => store.state.portfolio.selectedSeries);
-    const newImages = ref<ImageItem[] | []>(images.value)
-    const slide = ref(newImages.value[0].title)
+    const newImages = ref<ImageItem[] | []>([])
+    const initialImages: ComputedRef<ImageItem[]> = computed(
+      () => store.getters['portfolio/getSelectedImages'](3))
+    const slide = ref<string>('')
     const toggleShowHeader = (boolean: boolean) => {
       void store.dispatch('header/toggleShowHeader', boolean)
     }
     const setShowSeriesSelect = (boolean: boolean) => {
       void store.dispatch('header/setShowSeriesSelect', boolean)
     }
+
     onMounted(() => {
       setShowSeriesSelect(true)
+      newImages.value = initialImages.value
+      slide.value = initialImages.value[0].title
+      loading.value = false
     })
+
     watch(selectedSeries, () => {
-      loading.value = true
-      const res = images.value.filter(image => (
+      setSelectedView()
+    })
+
+    const setSelectedView = () => {
+      const filteredImages = images.value.filter(image => (
         image.seriesId === selectedSeries.value.id
       ))
-      newImages.value = res
-      setTimeout(() => {
-        loading.value = false
-      }, 500)
+      newImages.value = filteredImages
       slide.value = newImages.value[0].title
-    })
+      loading.value = false
+    }
+
     const handleModalOpen = (image: string): void => {
       selectedImg.value = image
       showImageModal.value = true
       void toggleShowHeader(false)
     }
+
     const handleModalClose = (): void => {
       showImageModal.value = false
       void toggleShowHeader(true)
     }
+
     return {
       toggleShowHeader,
       showImageModal,
@@ -182,6 +191,8 @@ export default defineComponent({
     height: 30rem;
   }
   .image-box {
+    border: solid $dark 1px;
+    border-radius: 5px;
     width: 30vw;
     max-height: 80vh;
     overflow: scroll;
@@ -191,6 +202,7 @@ export default defineComponent({
     cursor: pointer;
   }
   .portfolio-carousel {
+    border: solid $dark 1px;
     width: 50vw;
     height: 45rem;
   }
@@ -212,8 +224,8 @@ export default defineComponent({
     z-index: 3;
   }
   .selected-image {
-    max-height: 80%;
-    max-width: 80%;
+    max-height: 85%;
+    max-width: 85%;
     min-width: 60%;
     object-fit: contain;
     transition: opacity .28s ease-in;

@@ -11,6 +11,7 @@ import header from './module-header';
 import { HeaderState } from './module-header/state';
 import portfolio from './module-portfolio';
 import { PortfolioState } from './module-portfolio/state';
+import VuexPersistence from 'vuex-persist';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -43,13 +44,18 @@ declare module '@vue/runtime-core' {
 // provide typings for `useStore` helper
 export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-key')
 
+const vuexLocal = new VuexPersistence ({
+  storage: window.localStorage
+})
+
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       contact,
       header,
-      portfolio
+      portfolio,
     },
+    plugins: [vuexLocal.plugin]
     
 
     // enable strict mode (adds overhead!)
