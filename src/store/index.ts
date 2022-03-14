@@ -11,6 +11,8 @@ import header from './module-header';
 import { HeaderState } from './module-header/state';
 import portfolio from './module-portfolio';
 import { PortfolioState } from './module-portfolio/state';
+import user from './module-user';
+import { UserState } from './module-user/state';
 import VuexPersistence from 'vuex-persist';
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
@@ -29,9 +31,10 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown
-  contact: ContactState,
-  header: HeaderState,
-  portfolio: PortfolioState
+  contact: ContactState;
+  header: HeaderState;
+  portfolio: PortfolioState;
+  user: UserState;
 }
 
 // provide typings for `this.$store`
@@ -54,6 +57,7 @@ export default store(function (/* { ssrContext } */) {
       contact,
       header,
       portfolio,
+      user
     },
     plugins: [vuexLocal.plugin]
     

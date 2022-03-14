@@ -12,6 +12,7 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   require('dotenv').config();
 
   return {

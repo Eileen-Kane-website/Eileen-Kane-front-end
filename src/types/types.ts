@@ -14,3 +14,13 @@ export interface Series {
   name: string;
   id: number;
 }
+
+export interface User {
+  id: number;
+  email: string;
+}
+
+// export interface AuthedUser {
+//   email: string;
+//   token: string;
+// }
