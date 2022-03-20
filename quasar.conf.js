@@ -12,6 +12,7 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   require('dotenv').config();
 
   return {
@@ -96,7 +97,13 @@ module.exports = configure(function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      config: {},
+      config: {
+        notify: {
+          timeout: 2500,
+          color: 'accent',
+          position: 'top'
+        }
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -109,7 +116,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // animations: 'all', // --- includes all animations
