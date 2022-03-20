@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AuthForm :forSignup="false" />
+    <AuthForm :forSignup="true" />
   </div>
 </template>
 

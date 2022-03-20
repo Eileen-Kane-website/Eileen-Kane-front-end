@@ -18,6 +18,7 @@ export interface Series {
 export interface User {
   id: number;
   email: string;
+  firstName: string;
 }
 
 // export interface AuthedUser {
