@@ -1,34 +1,34 @@
 <template>
-  <q-form>
-    <q-input
-      v-if='forSignup'
-      outlined
-      label='first name'
-      v-model='firstName'
+  <div class='bg-info q-pa-lg form-outer'>
+    <div class='text-h4 text-dark text-center'>{{ welcomeMessage }}</div>
+    <q-form>
+      <q-input
+        v-if='forSignup'
+        outlined
+        label='first name'
+        v-model='firstName'
+        class='q-ma-lg'
+      />
+      <q-input
+        outlined
+        label='email'
+        v-model='email'
+        class='q-ma-lg'
+      />
+      <q-input
+        outlined
+        label='password'
+        v-model='password'
+        class='q-ma-lg'
+      />
+    <q-btn
+      label='submit'
+      @click='handleClick'
+      color='accent'
+      class='q-ma-lg'
     />
-    <q-input
-      outlined
-      label='email'
-      v-model='email'
-    />
-    <q-input
-      outlined
-      label='password'
-      v-model='password'
-    />
-  <q-btn
-    label='submit'
-    @click='handleClick'
-  />
-  <q-btn
-    label='clear user'
-    @click='clearUser'  
-  />
-  <q-btn
-    label='log'
-    @click='log(forSignup)'
-  />
-  </q-form>
+    </q-form>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -60,7 +60,10 @@ export default defineComponent({
       ? handleSignup
       : handleLogin
     )
-
+    const welcomeMessage: ComputedRef<string> = computed(() => forSignup.value
+      ? 'Welcome! Please signup to get started.'
+      : 'Welcome back! Please login.'
+    )
     const handleLogin = () => {
       void authApi.postLogin({
         email: email.value,
@@ -96,6 +99,7 @@ export default defineComponent({
       email,
       password,
       handleClick,
+      welcomeMessage,
       clearUser,
       log
     }
@@ -104,5 +108,17 @@ export default defineComponent({
 </script>
 
 <style lang='scss'>
-
+  .form-outer {
+    border: solid $dark 1px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-height: 40%;
+    width: 45%
+  }
+  .form-outer form {
+    width: 80%;
+  }
 </style>

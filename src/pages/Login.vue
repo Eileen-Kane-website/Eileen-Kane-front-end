@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='bg-accent flex justify-center items-center login-page'>
     <AuthForm :forSignup="false" />
   </div>
 </template>
@@ -18,5 +18,7 @@ export default defineComponent ({
 </script>
 
 <style>
-
+  .login-page {
+    height: 100vh;
+  }
 </style>
