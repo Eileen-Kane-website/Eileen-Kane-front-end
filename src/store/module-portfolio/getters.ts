@@ -21,10 +21,13 @@ const getters: GetterTree<PortfolioState, StateInterface> = {
       featuredNames.includes(image.title))
     return previewImages
   },
-  getImageIdsByTitle: (state) => (titles: string[]) => {
+  getImageIdsByTitle: (state) => (titles: string[], boolean: boolean) => {
     const filteredImages = state.images.filter(image => 
       (titles.includes(image.title)))
-    return filteredImages.map(image => image.id)
+    return filteredImages.map(image => ({
+      id: image.id,
+      isFeatured: boolean
+    }))
   }
 };
 

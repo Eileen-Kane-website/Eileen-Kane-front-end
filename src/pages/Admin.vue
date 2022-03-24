@@ -81,8 +81,7 @@ import {
   ComputedRef,
   computed,
   Ref,
-  ref,
-  watch
+  ref
 } from 'vue';
 import ImageCarousel from 'src/components/Image-Carousel.vue';
 import { useRouter } from 'vue-router';
@@ -90,7 +89,7 @@ import authApi from 'src/api/auth-api';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import imageApi from 'src/api/image-api';
-import { ImageItem } from 'src/types/types';
+import { ImageItem, FeatureUpdateItem } from 'src/types/types';
 import { AxiosResponse } from 'axios';
 
 export default defineComponent ({
@@ -118,9 +117,13 @@ export default defineComponent ({
 
     const newlyFeatured = computed(() => featured.value.filter(image => (!featuredNames.value.includes(image))));
     
-    const featuredIds: ComputedRef<number[]> = computed(() => store.getters['portfolio/getImageIdsByTitle'](newlyFeatured.value));
+    const featuredIds: ComputedRef<FeatureUpdateItem[]> = computed(() => 
+      store.getters['portfolio/getImageIdsByTitle']
+        (newlyFeatured.value, true));
 
-    const unFeaturedIds: ComputedRef<number[]> = computed(() => store.getters['portfolio/getImageIdsByTitle'](unFeatured.value));
+    const unFeaturedIds: ComputedRef<FeatureUpdateItem[]> = computed(() =>
+      store.getters['portfolio/getImageIdsByTitle']
+        (unFeatured.value, false));
 
     const handleNotify = (res: AxiosResponse | undefined) => {
       (res && res.status === 200)
@@ -141,7 +144,10 @@ export default defineComponent ({
     }
 
     const handleSubmit = () => {
-      void imageApi.updateFeaturedImages(featuredIds.value, unFeaturedIds.value)
+      void imageApi.updateFeaturedImages([
+        ...featuredIds.value,
+        ...unFeaturedIds.value
+      ])
         .then(res => handleNotify(res))
       void imageApi.getImages()
         .then((images: ImageItem[]) => store.dispatch('portfolio/setImages', images))
@@ -154,22 +160,11 @@ export default defineComponent ({
           ? void $q.notify(`Hello ${userName.value}!`)
           : router.push('/login')
         )
-      if(!images.value) {
-        void imageApi.getImages()
-          .then((fetchedImages: ImageItem[]) => (
-            store.dispatch('portfolio/setImages', fetchedImages)
-          ))
-      }
+      void imageApi.getImages()
+        .then((fetchedImages: ImageItem[]) => (
+          store.dispatch('portfolio/setImages', fetchedImages)
+        ))
       slide.value = currentFeatured.value[0].title 
-    })
-
-    watch(featured, () => {
-      void console.log('featured-model => ', featured.value)
-      void console.log('featured-names => ', featuredNames.value)
-      void console.log('unfeatured => ', unFeatured.value)
-      void console.log('Featured-IDs => ', featuredIds.value)
-      void console.log('unfeatured-IDs => ', unFeaturedIds.value)
-      void console.log('currentFeatured => ', currentFeatured.value)
     })
 
     return {

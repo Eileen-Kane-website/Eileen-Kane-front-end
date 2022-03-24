@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { ImageItem } from 'src/types/types';
+import { ImageItem, FeatureUpdateItem } from 'src/types/types';
 
 const getImages = async(): Promise<ImageItem[]>=> {
   try {
@@ -10,16 +10,15 @@ const getImages = async(): Promise<ImageItem[]>=> {
   } return []
 }
 
-const updateFeaturedImages = async(featuredImages: number[], unFeaturedImages: number[]) => {
+const updateFeaturedImages = async(featureUpdateImages: FeatureUpdateItem[]) => {
   try {
     const res = await api.put('art-works/featured', {
-    featuredImages,
-    unFeaturedImages
+    featureUpdateImages
     })
-  return res
-} catch(error) {
-  console.log(error)
-} 
+    return res
+  } catch(error) {
+    console.log(error)
+  } 
 }
 
 export default {
