@@ -10,6 +10,19 @@ const getImages = async(): Promise<ImageItem[]>=> {
   } return []
 }
 
+const updateFeaturedImages = async(featuredImages: number[], unFeaturedImages: number[]) => {
+  try {
+    const res = await api.put('art-works/featured', {
+    featuredImages,
+    unFeaturedImages
+    })
+  return res
+} catch(error) {
+  console.log(error)
+} 
+}
+
 export default {
-  getImages
+  getImages,
+  updateFeaturedImages
 }
