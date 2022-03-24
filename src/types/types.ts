@@ -10,6 +10,11 @@ export interface ImageItem {
   seriesName: string; 
 }
 
+export interface FeatureUpdateItem {
+  id: number;
+  isFeatured: boolean;
+} 
+
 export interface Series {
   name: string;
   id: number;
@@ -20,8 +25,3 @@ export interface User {
   email: string;
   firstName: string;
 }
-
-// export interface AuthedUser {
-//   email: string;
-//   token: string;
-// }
