@@ -115,7 +115,6 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 40%;
     width: 45%
   }
   .form-outer form {
