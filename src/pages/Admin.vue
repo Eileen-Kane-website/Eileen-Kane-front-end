@@ -41,6 +41,7 @@
           <q-btn
             v-if="!previewMode"
             color="dark"
+            glossy
             label='preview'
             class='q-ma-md'
             @click='handlePreview'
@@ -55,6 +56,7 @@
           <q-btn
             v-if='previewMode'
             color="secondary"
+            glossy
             label='cancel'
             class='q-ma-md'
             @click='cancelPreview'
@@ -62,6 +64,7 @@
           <q-btn
             v-if='previewMode'
             color="dark"
+            glossy
             label='submit'
             class='q-ma-md'
             @click='handleSubmit'
@@ -77,7 +80,7 @@
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   defineComponent,
-  onMounted,
+  onBeforeMount,
   ComputedRef,
   computed,
   Ref,
@@ -154,7 +157,7 @@ export default defineComponent ({
       previewMode.value = false
     }
 
-    onMounted(() => {
+    onBeforeMount(() => {
       void authApi.getVerify()
         .then(res => res.ok
           ? void $q.notify(`Hello ${userName.value}!`)
