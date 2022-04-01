@@ -4,7 +4,6 @@ import { UserState } from './state';
 
 const actions: ActionTree<UserState, StateInterface> = {
   setUser(context, payload) {
-    console.log('SET USER ====> ', payload)
     context.commit('SET_USER', payload)
   }
 };

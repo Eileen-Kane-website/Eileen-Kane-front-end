@@ -17,10 +17,19 @@
       />
       <q-input
         outlined
+        :type="isPwd ? 'password' : 'text'"
         label='password'
         v-model='password'
         class='q-ma-lg'
-      />
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+        </template>
+      </q-input>
     <q-btn
       label='submit'
       @click='handleClick'
@@ -56,6 +65,7 @@ export default defineComponent({
     const firstName: Ref<string> = ref('');
     const email: Ref<string> = ref('');
     const password: Ref<string> = ref('');
+    const isPwd: Ref<boolean> =ref(true);
     const handleClick: ComputedRef = computed(() => forSignup.value
       ? handleSignup
       : handleLogin
@@ -79,7 +89,7 @@ export default defineComponent({
       void authApi.postSignup({
         firstName: firstName.value,
         email: email.value,
-        password: password.value
+        password: password.value,
       }).then(user => {
         void store.dispatch('user/setUser', user)
         void router.push('/admin')
@@ -98,6 +108,7 @@ export default defineComponent({
       firstName,
       email,
       password,
+      isPwd,
       handleClick,
       welcomeMessage,
       clearUser,
