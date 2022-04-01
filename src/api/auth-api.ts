@@ -10,6 +10,10 @@ interface NewUser extends PreAuthUser {
   firstName: string;
 }
 
+// interface ReturnedUser extends NewUser {
+//   token: string;
+// }
+
 const postLogin = async(user: PreAuthUser) => {
   const res = await fetch(`${process.env.API_URL}/auth/login`, {
     method: 'POST',
@@ -20,7 +24,7 @@ const postLogin = async(user: PreAuthUser) => {
       password: user.password
     })
   });
-  
+  // const headers = res.headers
   const json: JSON = await res.json();
 
   if(!res.ok) throw json;
@@ -43,10 +47,13 @@ const postSignup = async(user: NewUser) => {
   return json
 }
 
-const getVerify = async () => {
+const getVerify = async (token: string) => {
  return await fetch(`${process.env.API_URL}/auth/verify`, {
-   credentials: 'include'
- })
+   credentials: 'include',
+   headers: {
+     'Authorization': `Bearer ${token}`
+   } 
+   })
 }
 
 export default {

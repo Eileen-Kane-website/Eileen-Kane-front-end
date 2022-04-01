@@ -107,6 +107,7 @@ export default defineComponent ({
     const previewMode = ref<boolean>(false);
     const images: ComputedRef<ImageItem[]> = computed(() => store.getters['portfolio/getAllImages']);
     const userName: ComputedRef<string> = computed(() => store.state.user.firstName)
+    const token: ComputedRef<string> = computed(() => store.state.user.token);
     const currentFeatured: ComputedRef<ImageItem[]> = computed(() => store.getters['portfolio/getFeaturedImages']);
     const featuredNames: ComputedRef<string[]> = computed(() => (
       currentFeatured.value.map((image: ImageItem) => image.title)
@@ -158,7 +159,7 @@ export default defineComponent ({
     }
 
     onBeforeMount(() => {
-      void authApi.getVerify()
+      void authApi.getVerify(token.value)
         .then(res => res.ok
           ? void $q.notify(`Hello ${userName.value}!`)
           : router.push('/login')
