@@ -13,7 +13,7 @@ const mutation: MutationTree<PortfolioState> = {
     state.selectedSeries = series
   },
   RESET_SELECTED_SERIES (state: PortfolioState) {
-    state.selectedSeries = { name: 'Charcoal', id: 3 }
+    state.selectedSeries = { name: 'Forms of Protest', id: 3 }
   }
 };
 

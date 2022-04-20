@@ -36,7 +36,8 @@
           class="rounded-borders"
         >
           <q-carousel-slide
-            v-for='image in featuredImages' 
+            v-for='image in featuredImages'
+            class='image-slide'
             :key='image.id' 
             :name="image.title" 
             :img-src="`${image.slug}.jpeg`" 
@@ -56,7 +57,7 @@
           autoplay
           infinite
           control-color="primary"
-          class="rounded-borders"
+          class="rounded-borders bg-info"
           style="max-height: 7rem"
         >
           <q-carousel-slide
@@ -143,6 +144,11 @@ export default defineComponent({
     font-family: 'Poppins';
     top: 100px;
     right: 55px;
+  }
+  .image-slide {
+    background-size: contain;
+    background-repeat: no-repeat; 
+    background-color: $info;
   }
   .main-image { 
     margin: 0 0 0 0;

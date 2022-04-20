@@ -10,7 +10,7 @@ function state(): PortfolioState {
   return {
     images: [],
     series: [],
-    selectedSeries: { name: 'Charcoal', id: 1 }
+    selectedSeries: { name: 'Forms of Protest', id: 1 }
   }
 };
 
