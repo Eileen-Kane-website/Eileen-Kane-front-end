@@ -25,7 +25,8 @@
             v-for='image in featuredImages' 
             :key='image.id' 
             :name="image.title" 
-            :img-src="`${image.slug}.jpeg`" 
+            :img-src="`${image.slug}.jpeg`"
+            class='image-slide'
           />
         </q-carousel>
       </q-card-section>
@@ -107,6 +108,11 @@ export default defineComponent({
     border: solid $dark 1px;
     min-width: 80%;
     // margin: 60px 0 0 30%;
+  }
+  .image-slide {
+    background-size: contain;
+    background-repeat: no-repeat; 
+    background-color: $info;
   }
   .main-image { 
     margin: 0 0 0 0;
