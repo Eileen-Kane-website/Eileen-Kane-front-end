@@ -25,6 +25,7 @@ import ImageManager from 'src/components/ImageManager.vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
+import { ImageItem } from 'src/types/types';
 import authApi from 'src/api/auth-api';
 import imageApi from 'src/api/image-api';
 
