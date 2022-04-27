@@ -56,10 +56,13 @@ export default defineComponent ({
         const target = e
           ? e.target as HTMLInputElement
           : null
-        if (target) {
-          previewFile(target.files[0] as string)
-        } else {
-          console.log('no file selected!')
+        
+        const blob = target?.files
+          ? target.files[0]
+          : null
+
+        if(blob) {
+          previewFile(blob)
         }
       })  
       

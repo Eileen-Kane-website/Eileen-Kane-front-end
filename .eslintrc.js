@@ -77,6 +77,7 @@ module.exports = {
   rules: {
     'prefer-promise-reject-errors': 'off',
 
+
     // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],
     '@typescript-eslint/explicit-function-return-type': 'off',
