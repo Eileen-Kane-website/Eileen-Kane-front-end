@@ -28,7 +28,20 @@ const getters: GetterTree<PortfolioState, StateInterface> = {
       id: image.id,
       isFeatured: boolean
     }))
-  }
+  },
+  getSlugs: (state) => {
+    const slugs = state.images.map(image => 
+      image.slug)
+    return slugs
+  },
+  getSeriesOptions: (state => {
+    const seriesOptions = state.series.map(series => ({
+      label: series.name,
+      value: series.id
+    })
+    )
+    return seriesOptions
+  })
 };
 
 export default getters;

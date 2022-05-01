@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { ImageItem, FeatureUpdateItem } from 'src/types/types';
+import { ImageItem, FeatureUpdateItem, NewImage } from 'src/types/types';
 
 const getImages = async(): Promise<ImageItem[]>=> {
   try {
@@ -21,7 +21,23 @@ const updateFeaturedImages = async(featureUpdateImages: FeatureUpdateItem[]) => 
   } 
 }
 
+const uploadImage = async(imageBlob: unknown, imageData: NewImage) => {
+  try {
+    console.log('api')
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const res = await api.post('art-works', {
+      imageBlob,
+      imageData
+    })
+    console.log('api-res => ', res)
+    return res
+  } catch(error) {
+
+  }
+}
+
 export default {
   getImages,
-  updateFeaturedImages
+  updateFeaturedImages,
+  uploadImage
 }

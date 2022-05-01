@@ -10,6 +10,16 @@ export interface ImageItem {
   seriesName: string; 
 }
 
+export interface NewImage {
+  title: string;
+  medium: string;
+  dimensions: string;
+  year: string;
+  slug: string;
+  is_featured: boolean;
+  series_id: number | null;
+}
+
 export interface FeatureUpdateItem {
   id: number;
   isFeatured: boolean;

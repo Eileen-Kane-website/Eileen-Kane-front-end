@@ -22,6 +22,7 @@ import {
 } from 'vue';
 import FeaturedImageManager from 'src/components/FeaturedImageManager.vue';
 import ImageManager from 'src/components/ImageManager.vue';
+import { ImageItem }from 'src/types/types';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
