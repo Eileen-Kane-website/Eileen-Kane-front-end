@@ -1,7 +1,7 @@
 <template>
   <div class='q-pa-lg bg-info'>
     <div class='q-pa-lg q-mt-lg flex items-center'>
-      <div class='text-h5 text-dark q-mr-xl'>
+      <div class='text-h5 text-dark q-mr-xl q-ml-md'>
         add new content
       </div>
       <q-btn 
@@ -117,6 +117,7 @@ import {
 import imageApi from 'src/api/image-api';
 import { NewImage, Series } from 'src/types/types';
 import { useStore } from 'src/store'; 
+import imageCompression from 'browser-image-compression';
 
 
 export default defineComponent ({
@@ -148,12 +149,24 @@ export default defineComponent ({
         imageUrl.value = URL.createObjectURL(previewSource.value)
       } 
 
-      const handleImageSubmit = () => {     
+      const handleImageSubmit = async() => {     
         const reader = new FileReader()
-        reader.readAsDataURL(previewSource.value)
+        const compressionOptions = {
+          maxSizeMB: 1,
+          // maxWidthOrHeight: 400,
+          useWebworker: true
+        }
+        const compressed = await imageCompression(previewSource.value, compressionOptions)
+        reader.readAsDataURL(compressed)
         reader.onloadend = () => {
-          void imageApi.uploadImage(reader.result, newImage.value)
-            .then(res => console.log('component => ', res))
+          console.log('compressed => ', reader.result)
+          console.log(`compressedFile size ${compressed.size / 1024 / 1024} MB`); 
+          // void imageCompression(previewSource.value, compressionOptions)
+          //   .then(compressedImage => {
+          //     console.log('image => ', compressedImage)
+              void imageApi.uploadImage(reader.result, newImage.value)
+                .then(res => console.log('component => ', res))
+            
         }
       }
 
