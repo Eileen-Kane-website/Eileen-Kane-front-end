@@ -25,6 +25,11 @@ export interface FeatureUpdateItem {
   isFeatured: boolean;
 } 
 
+export interface DeleteImageItem {
+  slug: string,
+  id: number,
+}
+
 export interface Series {
   name: string;
   id: number;

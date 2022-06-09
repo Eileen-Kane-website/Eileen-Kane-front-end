@@ -38,7 +38,7 @@
       />
     </div>
     <div>
-      <a class='toolbar-link' href='resume.pdf' target='blank'>
+      <a class='toolbar-link' href='resume-2022.pdf' target='blank'>
         <q-btn
         flat
         text-color='dark'
@@ -63,6 +63,7 @@
 </template>
 
 <script lang='ts'>
+  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import { 
   defineComponent, 
@@ -85,19 +86,22 @@ interface SeriesOption {
 export default defineComponent({
   setup() {
     const store = useStore();
-    const series: ComputedRef<Series[]> = computed(() => store.state.portfolio.series)
-    const showSeriesSelect = computed(() => store.state.header.showSeriesSelect);
-    const currentSeries = computed(() => store.state.portfolio.selectedSeries)
+    const series: ComputedRef<Series[]> = computed(() => (
+      store.state.portfolio.series
+    ));
+    const showSeriesSelect = computed(() => (
+      store.state.header.showSeriesSelect
+    ));
+    const currentSeries = computed(() => (
+      store.state.portfolio.selectedSeries
+    ));
     const selectedSeries = ref({ 
       label: currentSeries.value.name, 
       value: currentSeries.value.id
     });
-    const seriesOptions: ComputedRef<SeriesOption[]> = computed(() => series.value.map(
-      seriesObj => ({
-        label: seriesObj.name,
-        value: seriesObj.id
-      })
-    ))
+    const seriesOptions = computed<SeriesOption[]>(() => (
+      store.getters['portfolio/getSeriesOptions']
+    ));
 
     onMounted(() => {
       void seriesApi.getSeries()

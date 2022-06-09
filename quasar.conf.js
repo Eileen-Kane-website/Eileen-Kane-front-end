@@ -60,7 +60,9 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
-        API_URL: process.env.API_URL
+        API_URL: process.env.API_URL,
+        IMAGE_URL: process.env.IMAGE_URL,
+        THUMB_URL: process.env.THUMB_URL
       },
       transpile: true,
       // publicPath: '/',

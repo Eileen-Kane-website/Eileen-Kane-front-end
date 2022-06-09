@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='bg-info admin-outer'>
     <q-toolbar class='bg-info text-dark shadow-2 top-bar'>
           <q-btn
             @click='goHome'
@@ -7,9 +7,41 @@
             label='homepage'
             class='q-ml-lg'
           />
+          <q-space />
+          <q-btn-dropdown
+            color='accent'
+            glossy
+            label="content managers"
+            class='q-ma-lg'
+          >
+            <q-btn
+              @click="setView('content')"
+              v-close-popup
+              flat
+              label='images'
+              class='q-ml-lg'
+            />
+            <q-btn
+              @click="setView('featured')"
+              v-close-popup
+              flat
+              label='featured images'
+              class='q-ml-lg'
+            />
+            <q-btn
+              @click="setView('series')"
+              v-close-popup
+              flat
+              label='series'
+              class='q-ml-lg'
+            />
+          </q-btn-dropdown>
     </q-toolbar>
-    <ImageManager />
-    <FeaturedImageManager />
+    <div class='q-pt-xl'>
+      <ImageManager v-if="view === 'content'" />
+      <FeaturedImageManager v-if="view === 'featured'" />
+      <SeriesManager v-if="view === 'series'" />
+    </div>
   </div>
 </template>
 
@@ -18,10 +50,12 @@ import {
   defineComponent, 
   onBeforeMount,
   onMounted,
-  computed 
+  computed,
+  ref
 } from 'vue';
 import FeaturedImageManager from 'src/components/FeaturedImageManager.vue';
 import ImageManager from 'src/components/ImageManager.vue';
+import SeriesManager from 'src/components/SeriesManager.vue';
 import { ImageItem }from 'src/types/types';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
@@ -32,13 +66,15 @@ import imageApi from 'src/api/image-api';
 export default defineComponent ({
   components: {
     ImageManager,
-    FeaturedImageManager
+    FeaturedImageManager,
+    SeriesManager
   },
   setup() {
     const router = useRouter();
     const $q = useQuasar();
     const store = useStore();
 
+    const view = ref<string>('content');
     const token = computed<string>(() =>
       store.state.user.token);
     const userName = computed<string>(() => 
@@ -46,6 +82,10 @@ export default defineComponent ({
 
     const goHome = () => {
       void router.push('/')
+    }
+
+    const setView = (selectedView: string) => {
+      view.value = selectedView
     }
 
     onBeforeMount(() => {
@@ -64,6 +104,8 @@ export default defineComponent ({
     }) 
 
     return {
+      view,
+      setView,
       goHome
     }
   }
@@ -75,6 +117,9 @@ export default defineComponent ({
   .top-bar {
     z-index: 2;
     position: fixed;
+  }
+  .admin-outer {
+    min-height: 100vh;
   }
 
 </style>

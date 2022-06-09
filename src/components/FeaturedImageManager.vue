@@ -15,7 +15,9 @@
             color='accent' 
             class='check-box'
           />
-          <q-img :src="`${image.slug}.jpeg`" class='list-image'/>
+          <q-img
+            :src="`${imageUrl}${image.slug}.jpg`" class='list-image'
+          />
           <div class='text-subtitle2 text-dark'>{{ image.title }}</div>
         </q-item>
       </div>
@@ -79,8 +81,6 @@ import {
   ref
 } from 'vue';
 import ImageCarousel from 'src/components/Image-Carousel.vue';
-// import { useRouter } from 'vue-router';
-// import authApi from 'src/api/auth-api';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import imageApi from 'src/api/image-api';
@@ -93,14 +93,17 @@ export default defineComponent ({
   },
   setup() {
     const $q = useQuasar();
-    // const router = useRouter();
+    const imageUrl = process.env.IMAGE_URL;
+    const thumbUrl = process.env.THUMB_URL;
     const store = useStore();
     const slide = ref<string>('');
     const previewMode = ref<boolean>(false);
-    const images: ComputedRef<ImageItem[]> = computed(() => store.getters['portfolio/getAllImages']);
-    // const userName: ComputedRef<string> = computed(() => store.state.user.firstName)
-    // const token: ComputedRef<string> = computed(() => store.state.user.token);
-    const currentFeatured: ComputedRef<ImageItem[]> = computed(() => store.getters['portfolio/getFeaturedImages']);
+    const images: ComputedRef<ImageItem[]> = computed(() => (
+      store.getters['portfolio/getAllImages']
+    ));
+    const currentFeatured: ComputedRef<ImageItem[]> = computed(() => (
+      store.getters['portfolio/getFeaturedImages']
+    ));
     const featuredNames: ComputedRef<string[]> = computed(() => (
       currentFeatured.value.map((image: ImageItem) => image.title)
     ))
@@ -109,9 +112,15 @@ export default defineComponent ({
     )))
     const featured: Ref<string[]> = ref(featuredNames.value);
 
-    const previewImages: ComputedRef<ImageItem[]> = computed(() => store.getters['portfolio/getFeaturePreview'](featured.value))
+    const previewImages: ComputedRef<ImageItem[]> = computed(() => (
+      store.getters['portfolio/getFeaturePreview'](featured.value)
+    ))
 
-    const newlyFeatured = computed(() => featured.value.filter(image => (!featuredNames.value.includes(image))));
+    const newlyFeatured = computed(() => (
+      featured.value.filter(image => (
+        !featuredNames.value.includes(image)
+        ))
+    ));
     
     const featuredIds: ComputedRef<FeatureUpdateItem[]> = computed(() => 
       store.getters['portfolio/getImageIdsByTitle']
@@ -151,15 +160,6 @@ export default defineComponent ({
     }
 
     onBeforeMount(() => {
-      // void authApi.getVerify(token.value)
-      //   .then(res => res.ok
-      //     ? void $q.notify(`Hello ${userName.value}!`)
-      //     : router.push('/login')
-      //   )
-      // void imageApi.getImages()
-      //   .then((fetchedImages: ImageItem[]) => (
-      //     store.dispatch('portfolio/setImages', fetchedImages)
-      //   ))
       slide.value = currentFeatured.value[0].title 
     })
 
@@ -170,6 +170,8 @@ export default defineComponent ({
       previewImages,
       previewMode,
       slide,
+      imageUrl,
+      thumbUrl,
       handlePreview,
       cancelPreview,
       handleSubmit

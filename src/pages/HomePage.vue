@@ -40,7 +40,7 @@
             class='image-slide'
             :key='image.id' 
             :name="image.title" 
-            :img-src="`${image.slug}.jpeg`" 
+            :img-src="`${imageUrl}${image.slug}.jpg`" 
           />
         </q-carousel>
       </q-card-section>
@@ -89,9 +89,11 @@ import { useStore } from 'src/store';
 import { ImageItem } from 'src/types/types';
 import imageApi from 'src/api/image-api';
 
+
 export default defineComponent({
   setup () {
     const store = useStore()
+    const imageUrl = process.env.IMAGE_URL;
     const loading = ref<boolean>(true);
     const images: ComputedRef<ImageItem[]> = computed(() => store.state.portfolio.images)
     const featuredImages: ComputedRef<ImageItem[]> = computed(() => images.value.filter(image => image.isFeatured))
@@ -111,12 +113,14 @@ export default defineComponent({
       void store.dispatch('portfolio/resetSelectedSeries')
       void imageApi.getImages()
         .then((images: ImageItem[]) => store.dispatch('portfolio/setImages', images))
+      console.log('image-slugs => ', featuredImages.value.map(img => img.slug))
     })
 
     return {
       loading,
       slide,
       featuredImages,
+      imageUrl,
       log
     }
   }

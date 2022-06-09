@@ -14,6 +14,21 @@ const actions: ActionTree<PortfolioState, StateInterface> = {
   },
   resetSelectedSeries(context) {
     context.commit('RESET_SELECTED_SERIES')
+  },
+  removeDeletedImages(context, payload) {
+    context.commit('REMOVE_DELETED_IMAGES', payload)
+  },
+  addImage(context, payload) {
+    context.commit('ADD_IMAGE', payload)
+  },
+  addSeries(context, payload) {
+    context.commit('ADD_SERIES', payload)
+  },
+  setUpdatedSeries(context, payload) {
+    context.commit('SET_UPDATED_SERIES', payload)
+  },
+  removeSeries(context, payload) {
+    context.commit('REMOVE_SERIES', payload)
   }
 };
 
