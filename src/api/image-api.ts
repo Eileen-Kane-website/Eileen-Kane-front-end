@@ -29,10 +29,14 @@ const updateFeaturedImages = async(featureUpdateImages: FeatureUpdateItem[]) => 
 const uploadImage = async(imageBlob: unknown, imageData: NewImage):
   Promise<ImageItem | string> => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const res = await api.post('art-works', {
+    const res = await api.post('art-works', {data: {
       imageBlob,
       imageData
-    })
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
     if(res.status !== 200) return res.statusText
     console.log('api-res => ', res)
     return res.data
