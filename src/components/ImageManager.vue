@@ -304,7 +304,6 @@ export default defineComponent ({
         const compressed = await imageCompression(previewSource.value, compressionOptions)
         reader.readAsDataURL(compressed)
         reader.onloadend = () => {
-          alert(`right here => ${compressed.size}`)
               void imageApi.uploadImage(reader.result, newImage.value)
                 .then(res => {
                   void store.dispatch('portfolio/addImage', (res))
