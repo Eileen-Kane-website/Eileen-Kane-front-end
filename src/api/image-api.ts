@@ -34,7 +34,8 @@ const uploadImage = async(imageBlob: unknown, imageData: NewImage):
       imageData
     },
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     }
   })
     if(res.status !== 200) return res.statusText
