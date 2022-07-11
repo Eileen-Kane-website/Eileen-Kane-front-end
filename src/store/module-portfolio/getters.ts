@@ -11,6 +11,9 @@ const getters: GetterTree<PortfolioState, StateInterface> = {
     return state.images.sort((a, b) => (
       a.title.localeCompare(b.title)))
   },
+  getImageById: (state) => (id: number) => {
+    return state.images.find(image => image.id === id)
+  },
   getFeaturedImages: (state) => {
     const featuredImages = state.images.filter(image => 
       image.isFeatured)
@@ -38,9 +41,15 @@ const getters: GetterTree<PortfolioState, StateInterface> = {
     const seriesOptions = state.series.map(series => ({
       label: series.name,
       value: series.id
-    })
-    )
+    }))
     return seriesOptions
+  }),
+  getImageOptions: (state => {
+    const imageOptions = state.images.map(image => ({
+      label: image.title,
+      value: image.id
+    }))
+    return imageOptions
   })
 };
 

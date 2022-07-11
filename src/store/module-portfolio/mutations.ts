@@ -24,6 +24,12 @@ const mutation: MutationTree<PortfolioState> = {
   ADD_IMAGE (state: PortfolioState, image: ImageItem) {
     state.images = [...state.images, image]
   },
+  SET_UPDATED_IMAGE (state: PortfolioState, image: ImageItem) {
+    state.images = state.images.map(img => (img.id === image.id
+      ? image
+      : img
+    ))
+  },
   ADD_SERIES (state: PortfolioState, series: Series) {
     state.series = [...state.series, series]
   },

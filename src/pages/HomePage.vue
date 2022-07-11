@@ -113,7 +113,7 @@ export default defineComponent({
       void store.dispatch('portfolio/resetSelectedSeries')
       void imageApi.getImages()
         .then((images: ImageItem[]) => store.dispatch('portfolio/setImages', images))
-      console.log('image-slugs => ', featuredImages.value.map(img => img.slug))
+      // console.log('image-slugs => ', featuredImages.value.map(img => img.slug))
     })
 
     return {
