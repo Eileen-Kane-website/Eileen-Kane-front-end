@@ -29,6 +29,9 @@ const actions: ActionTree<PortfolioState, StateInterface> = {
   },
   removeSeries(context, payload) {
     context.commit('REMOVE_SERIES', payload)
+  },
+  setUpdatedImage(context, payload) {
+    context.commit('SET_UPDATED_IMAGE', payload)
   }
 };
 

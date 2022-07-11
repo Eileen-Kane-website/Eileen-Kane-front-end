@@ -6,7 +6,8 @@ import {
     ImageItem, 
     DeleteImageItem,
     FeatureUpdateItem, 
-    NewImage
+    NewImage,
+    UpdateImage
 } from 'src/types/types';
 
 const getImages = async(): Promise<ImageItem[]> => {
@@ -62,6 +63,18 @@ const uploadImage = async(imageBlob: unknown, imageData: NewImage):
   return json;
   }
 
+const updateImage = async(image: UpdateImage): Promise<ImageItem | void> => {
+  try {
+    const res = await api.put(`art-works/${image.id}`, {data: {
+      image
+    }
+  })
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const deleteImage = async(images: DeleteImageItem[]) => {
   try {
     const res = await api.delete('art-works', { data: {
@@ -78,5 +91,6 @@ export default {
   getImages,
   updateFeaturedImages,
   uploadImage,
+  updateImage,
   deleteImage
 }
