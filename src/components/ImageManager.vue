@@ -276,8 +276,7 @@
 import {
   defineComponent,
   ref,
-  computed,
-  onMounted
+  computed
 } from 'vue';
 import { useQuasar } from 'quasar';
 import imageApi from 'src/api/image-api';
@@ -288,9 +287,9 @@ import imageCompression from 'browser-image-compression';
 
 
 interface Option {
-          label: string,
-          value: number
-        }
+  label: string,
+  value: number
+}
 
 export default defineComponent ({
     setup () {
@@ -379,12 +378,12 @@ export default defineComponent ({
             ...newImage.value
           })
             .then(img => {
-              console.log('OLD => ', {
-            id: imageId.value, 
-            old_slug: imageToUpdate.value.slug,
-            ...newImage.value
-          })
-          console.log('NEW => ', img)
+          //     console.log('OLD => ', {
+          //   id: imageId.value, 
+          //   old_slug: imageToUpdate.value.slug,
+          //   ...newImage.value
+          // })
+          // console.log('NEW => ', img)
               void store.dispatch('portfolio/setUpdatedImage', (img))
               if(img) {
                 $q.notify(`Image ${img.title} updated succesfully!`)
@@ -495,13 +494,7 @@ export default defineComponent ({
           ? 'Are you sure you want to delete this image?'
           : 'Are you sure you want to delete these images?'
       })
-      // const logIt = () => {
-      //   console.log('here => ', computedImageOptions.value)
-      // }
-
-      onMounted(() => {
-        // logIt()
-      })
+    
 
       return {
         previewSource,

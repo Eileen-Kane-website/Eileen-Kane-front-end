@@ -54,7 +54,7 @@
             flat
             text-color='dark'
             :label='button.label' 
-            @click='handleMenuClick(button.value)'
+            @click='button.handler'
           />
         </q-card-section>
       </q-card>
@@ -125,11 +125,13 @@ export default defineComponent({
   },
   data () {
     return {
+      showModal: false,
       buttons: [
         {
           label: 'Home',
           value: 'home',
           handler: () => {
+            // this.showModal = false
             this.handleNavClick('/')
           }
         },
@@ -155,7 +157,6 @@ export default defineComponent({
           }
         }
       ],
-      showModal: false
     }
   },
   methods: {
@@ -176,17 +177,18 @@ export default defineComponent({
     toggleModal(): void {
       this.showModal = !this.showModal
     },
-    handleMenuClick(button: string): void {
-      console.log(button)
+    handleMenuClick(): void {
       this.toggleModal()
     },
     handleClick(): void {
       console.log('button')
     },
     handleContactClick(): void {
+      this.showModal = false
       void this.toggleShowContact()
     },
     handleNavClick(route: string): void {
+      this.showModal = false
       void this.$router.push(route)
     }
   }
