@@ -1,5 +1,5 @@
 import { api } from 'boot/axios';
-import { Series } from 'src/types/types';
+import { Series, ImageItem } from 'src/types/types';
 
 const getSeries = async(): Promise<Series[]> => {
   try {
@@ -10,6 +10,39 @@ const getSeries = async(): Promise<Series[]> => {
   } return []
 }
 
+const addSeries = async(series: string): 
+  Promise<Series | string> => {
+    const res = await api.post('/series', {
+      series
+    })
+    if(res.status !== 200) return res.statusText
+  return res.data
+}
+
+const updateSeries = async(series: Series): 
+  Promise<Series | string> => {
+    const res = await api.post('series/update', {
+      series
+    })
+    if(res.status !== 200) return res.statusText
+  return res.data
+}
+
+const deleteSeries = async(series: Series, images: ImageItem[]): 
+  Promise<{ series: Series, images: ImageItem[] } | string> => {
+    const res = await api.delete('/series', {
+      data: {
+        series,
+        images
+      }
+    })
+    if(res.status !== 200) return res.statusText
+  return res.data
+}
+
 export default {
-  getSeries
+  getSeries,
+  addSeries,
+  updateSeries,
+  deleteSeries
 }

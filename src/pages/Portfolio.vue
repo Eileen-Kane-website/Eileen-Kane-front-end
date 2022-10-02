@@ -5,7 +5,7 @@
         v-for='image in newImages'
         class='portfolio-image'
         :key='image.id'
-        :src="`${image.slug}.jpeg`"
+        :src="`https://res.cloudinary.com/djruvo4k2/image/upload/eileen-kane/${image.slug}.jpg`"
         @click="handleModalOpen(`${image.slug}.jpeg`)"
       />
     </div>
@@ -35,7 +35,10 @@
             style='object-fit: contain'
             @click="handleModalOpen(`${image.slug}.jpeg`)"
           >
-            <img :src="`${image.slug}.jpeg`"  class='slide-image'/>
+            <img
+              :src="`${imageUrl}${image.slug}.jpg`"  
+              class='slide-image'
+            />
           </q-carousel-slide>
         </q-carousel>
       </q-card-section>
@@ -85,7 +88,7 @@
   >
     <img 
       class='selected-image'
-      :src='selectedImg'
+      :src="`${imageUrl}${selectedImg}`"
     />
     <q-btn 
       flat
@@ -117,6 +120,7 @@ export default defineComponent({
 
   setup() {
     const store = useStore();
+    const imageUrl = process.env.IMAGE_URL;
     const loading = ref<boolean>(true)
     const selectedImg = ref<string>('')
     const showImageModal = ref<boolean>(false)
@@ -168,6 +172,7 @@ export default defineComponent({
 
     return {
       toggleShowHeader,
+      imageUrl,
       showImageModal,
       images,
       selectedSeries,

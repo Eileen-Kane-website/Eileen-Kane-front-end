@@ -12,6 +12,7 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   require('dotenv').config();
 
   return {
@@ -59,7 +60,10 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
-        API_URL: process.env.API_URL
+        API_URL: process.env.API_URL,
+        IMAGE_URL: process.env.IMAGE_URL,
+        THUMB_URL: process.env.THUMB_URL,
+        IMAGE_MEDIUM_URL: process.env.IMAGE_MEDIUM_URL,
       },
       transpile: true,
       // publicPath: '/',
@@ -96,7 +100,14 @@ module.exports = configure(function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      config: {},
+      config: {
+        notify: {
+          timeout: 2500,
+          color: 'accent',
+          position: 'top',
+          classes: 'notification'
+        }
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -109,7 +120,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // animations: 'all', // --- includes all animations
@@ -151,9 +162,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: 'Quasar App',
-        short_name: 'Quasar App',
-        description: 'A Quasar Framework app',
+        name: 'ESKart Fine Art',
+        short_name: 'ESKart Fine Art',
+        description: 'An Artists Gallery',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

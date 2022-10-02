@@ -13,7 +13,48 @@
           </p>
         </div>
         <div class='flex row justify-center text-dark' style='width: 100%'>
-          
+          <div 
+            class='list-box border text-subtitle1 bg-primary text-dark q-pa-md q-ma-md'
+          >
+            <p class='text-h6'>
+              {{ soloExhibitions.type }}
+            </p>
+            <ul class='flex column items-start justify-start'>
+              <li v-for="string in soloExhibitions.items" :key="string" class='q-pb-md'>
+                <div class='text-subtitle1'>
+                  {{ string }}
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class='list-box border text-subtitle1 bg-primary text-dark q-pa-md q-ma-md'
+          >
+            <p class='text-h6'>
+              {{ groupExhibitions.type }}
+            </p>
+            <ul class='flex column items-start justify-start'>
+              <li v-for="string in groupExhibitionsA" :key="string" class='q-pb-md'>
+                <div class='text-subtitle1'>
+                  {{ string }}
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class='list-box border text-subtitle1 bg-primary text-dark q-pa-md q-ma-md'
+          >
+            <p class='text-h6'>
+              {{ groupExhibitions.type }} continued
+            </p>
+            <ul class='flex column items-start justify-start'>
+              <li v-for="string in groupExhibitionsB" :key="string" class='q-pb-md'>
+                <div class='text-subtitle1'>
+                  {{ string }}
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -57,7 +98,6 @@ setup() {
   }
   .bio-outer {
     width: 100vw;
-    height: 100vh;
     // background-image: url('../assets/Protest-i.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
