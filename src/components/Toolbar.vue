@@ -38,7 +38,7 @@
       />
     </div>
     <div>
-      <a class='toolbar-link' href='resume-2022.pdf' target='blank'>
+      <a class='toolbar-link' href='Resume.pdf' target='blank'>
         <q-btn
         flat
         text-color='dark'
