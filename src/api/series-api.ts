@@ -3,7 +3,7 @@ import { Series, ImageItem } from 'src/types/types';
 
 const getSeries = async(): Promise<Series[]> => {
   try {
-    const res = await api.get('/series');
+    const res = await api.get('/eskart/series');
     return res.data;
   } catch(error) {
     console.log(error)
@@ -12,7 +12,7 @@ const getSeries = async(): Promise<Series[]> => {
 
 const addSeries = async(series: string): 
   Promise<Series | string> => {
-    const res = await api.post('/series', {
+    const res = await api.post('/eskart/series', {
       series
     })
     if(res.status !== 200) return res.statusText
@@ -21,7 +21,7 @@ const addSeries = async(series: string):
 
 const updateSeries = async(series: Series): 
   Promise<Series | string> => {
-    const res = await api.post('series/update', {
+    const res = await api.post('/eskart/series/update', {
       series
     })
     if(res.status !== 200) return res.statusText
@@ -30,7 +30,7 @@ const updateSeries = async(series: Series):
 
 const deleteSeries = async(series: Series, images: ImageItem[]): 
   Promise<{ series: Series, images: ImageItem[] } | string> => {
-    const res = await api.delete('/series', {
+    const res = await api.delete('/eskart/series', {
       data: {
         series,
         images

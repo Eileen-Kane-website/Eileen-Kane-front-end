@@ -64,6 +64,7 @@ module.exports = configure(function (ctx) {
         IMAGE_URL: process.env.IMAGE_URL,
         THUMB_URL: process.env.THUMB_URL,
         IMAGE_MEDIUM_URL: process.env.IMAGE_MEDIUM_URL,
+        EMAIL_RECEIVER: process.env.EMAIL_RECEIVER
       },
       transpile: true,
       // publicPath: '/',

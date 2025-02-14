@@ -12,7 +12,7 @@ import {
 
 const getImages = async(): Promise<ImageItem[]> => {
   try {
-    const res = await api.get('/art-works');
+    const res = await api.get('eskart/art-works');
     return res.data;
   } catch(error) {
     console.log(error)
@@ -21,7 +21,7 @@ const getImages = async(): Promise<ImageItem[]> => {
 
 const updateFeaturedImages = async(featureUpdateImages: FeatureUpdateItem[]) => {
   try {
-    const res = await api.put('art-works/featured', {
+    const res = await api.put('eskart/art-works/featured', {
     featureUpdateImages
     })
     return res
@@ -49,7 +49,7 @@ const updateFeaturedImages = async(featureUpdateImages: FeatureUpdateItem[]) => 
 
 const uploadImage = async(imageBlob: unknown, imageData: NewImage):
   Promise<ImageItem | string> => {
-    const res = await fetch(`${process.env.API_URL}/art-works`, {
+    const res = await fetch(`${process.env.API_URL}/eskart/art-works`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',
@@ -65,7 +65,7 @@ const uploadImage = async(imageBlob: unknown, imageData: NewImage):
 
 const updateImage = async(image: UpdateImage): Promise<ImageItem | void> => {
   try {
-    const res = await api.put(`art-works/${image.id}`, {data: {
+    const res = await api.put(`eskart/art-works/${image.id}`, {data: {
       image
     }
   })
@@ -77,7 +77,7 @@ const updateImage = async(image: UpdateImage): Promise<ImageItem | void> => {
 
 const deleteImage = async(images: DeleteImageItem[]) => {
   try {
-    const res = await api.delete('art-works', { data: {
+    const res = await api.delete('eskart/art-works', { data: {
       images
     }
     })

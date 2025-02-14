@@ -108,6 +108,7 @@ import {
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import emailApi from 'src/api/contact-api';
+
 interface EmailResponse {
   status: string;
 }
@@ -123,11 +124,16 @@ export default defineComponent({
     const email: Ref<string | null> = ref(null);
     const message: Ref<string | null> = ref(null);
     const flag = 'This message was sent via eileen-kane.art';
+    const clientName = 'eskart.net'
+    const receiver = process.env.EMAIL_RECEIVER
+
     const newEmail: ComputedRef = computed(() => ({
       name: name.value,
-      email: email.value,
+      senderEmail: email.value,
       message: message.value,
-      flag
+      flag,
+      clientName,
+      receiver
     }));
     const messageSent = ref<boolean>(false);
     const working = ref<boolean>(false);
