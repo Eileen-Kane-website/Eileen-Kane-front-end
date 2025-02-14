@@ -9,8 +9,9 @@ interface Email {
 
 const postEmail = async(message: Email) => {
   try {
-    const res = await api.post('/email', {
-      message
+    console.log('whats the nmessage => ', message)
+    const res = await api.post('/mail', {
+      ...message
     });
     return res.data
   } catch (error) {
